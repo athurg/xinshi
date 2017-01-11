@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
@@ -12,6 +13,8 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * 系统广播监听类
@@ -33,7 +36,7 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
                 Log.e("XINSHI", "主叫号码为空");
                 return;
             }
-            notify("正拨打：" + phoneNumber);
+            notify(context, "正拨打：" + phoneNumber);
             return;
         }
 
@@ -46,7 +49,7 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
                 if (phoneNumber == null || phoneNumber.equals("")) {
                     return;
                 }
-                notify("新来电：" + phoneNumber);
+                notify(context, "新来电：" + phoneNumber);
             }
             return;
         }
@@ -90,12 +93,28 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
 
             //去掉多余的换行符
             notifyText = notifyText.trim().replaceAll("\r\n", "\n");
-            notify(notifyText);
+            notify(context, notifyText);
         }
     }
 
-    private void notify(String text) {
-        Log.i("XINSHI", "发送通知：" + text);
-        //TODO:发送通知信息到微信
+    private void notify(final Context context, final String text) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                //读取微信API配置信息
+                SharedPreferences preference = context.getSharedPreferences("wechat_config", MODE_PRIVATE);
+                String corpId = preference.getString("wechat_corp_id", null);
+                String chatSecret = preference.getString("wechat_chat_secret", null);
+
+                String sender = preference.getString("wechat_notify_sender", null);
+                String receiver = preference.getString("wechat_notify_receiver", null);
+
+                //创建微信API客户端并发送消息
+                WeChatClient chatClient = new WeChatClient(corpId, "", chatSecret);
+                chatClient.sendSingleChatTextMessage(sender, receiver, text);
+            }
+        };
+
+        new Thread(runnable).start();
     }
 }
