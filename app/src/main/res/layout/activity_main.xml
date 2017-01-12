@@ -10,105 +10,111 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.gooth.xinshi.MainActivity">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:text="微信CorpID"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/corpIdTextView" />
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="corpid"
-            android:ems="10"
-            android:id="@+id/corpIdEditText" />
+            <TextView
+                android:text="微信CorpID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/corpIdTextView" />
 
-        <TextView
-            android:text="微信Secret"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/secretTextView" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="corpid"
+                android:ems="10"
+                android:id="@+id/corpIdEditText" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="xxxx"
-            android:ems="10"
-            android:id="@+id/secretEditText" />
+            <TextView
+                android:text="微信Secret"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/secretTextView" />
 
-        <TextView
-            android:text="微信ChatSecret"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/chatSecretTextView" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="xxxx"
+                android:ems="10"
+                android:id="@+id/secretEditText" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="xxxx"
-            android:ems="10"
-            android:id="@+id/chatSecretEditText" />
+            <TextView
+                android:text="微信ChatSecret"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/chatSecretTextView" />
 
-        <TextView
-            android:text="微信收件人"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/receiverTextView" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="xxxx"
+                android:ems="10"
+                android:id="@+id/chatSecretEditText" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="sender"
-            android:ems="10"
-            android:id="@+id/receiverEditText" />
+            <TextView
+                android:text="微信收件人"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/receiverTextView" />
 
-        <TextView
-            android:text="微信聊天发件人"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/senderTextView" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="sender"
+                android:ems="10"
+                android:id="@+id/receiverEditText" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="receiver"
-            android:ems="10"
-            android:id="@+id/senderEditText" />
+            <TextView
+                android:text="微信聊天发件人"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/senderTextView" />
 
-        <TextView
-            android:text="微信AgentID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/agentIdTextView" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="receiver"
+                android:ems="10"
+                android:id="@+id/senderEditText" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:text="0"
-            android:ems="10"
-            android:id="@+id/agentIdEditText" />
+            <TextView
+                android:text="微信AgentID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/agentIdTextView" />
 
-        <Button
-            android:text="更新配置"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:onClick="updatePreferences" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text="0"
+                android:ems="10"
+                android:id="@+id/agentIdEditText" />
 
-    </LinearLayout>
+            <Button
+                android:text="更新配置"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:onClick="updatePreferences" />
+
+        </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>
