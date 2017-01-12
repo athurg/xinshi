@@ -24,7 +24,7 @@
             android:layout_alignParentBottom="true">
 
             <TextView
-                android:text="微信CorpID"
+                android:text="@string/wechat_corp_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/corpIdTextView" />
@@ -38,7 +38,7 @@
                 android:id="@+id/corpIdEditText" />
 
             <TextView
-                android:text="微信Secret"
+                android:text="@string/wechat_secret"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/secretTextView" />
@@ -52,7 +52,7 @@
                 android:id="@+id/secretEditText" />
 
             <TextView
-                android:text="微信ChatSecret"
+                android:text="@string/wechat_chat_secret"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/chatSecretTextView" />
@@ -66,7 +66,7 @@
                 android:id="@+id/chatSecretEditText" />
 
             <TextView
-                android:text="微信收件人"
+                android:text="@string/wechat_chat_receiver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/receiverTextView" />
@@ -80,7 +80,7 @@
                 android:id="@+id/receiverEditText" />
 
             <TextView
-                android:text="微信聊天发件人"
+                android:text="@string/wechat_chat_sender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/senderTextView" />
@@ -94,7 +94,7 @@
                 android:id="@+id/senderEditText" />
 
             <TextView
-                android:text="微信AgentID"
+                android:text="@string/wechat_chat_agent_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/agentIdTextView" />
@@ -108,7 +108,7 @@
                 android:id="@+id/agentIdEditText" />
 
             <Button
-                android:text="更新配置"
+                android:text="@string/update_preference"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/button"

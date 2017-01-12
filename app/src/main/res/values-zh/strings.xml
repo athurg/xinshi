@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">信使</string>
+    <string name="wechat_corp_id">微信CorpID</string>
+    <string name="update_preference">更新配置</string>
+    <string name="wechat_chat_agent_id">微信应用AgentID</string>
+    <string name="wechat_chat_receiver">微信企业会话收件人</string>
+    <string name="wechat_chat_sender">微信企业会话发件人</string>
+    <string name="wechat_secret">微信Secret</string>
+    <string name="wechat_chat_secret">微信企业会话Secret</string>
+</resources>
