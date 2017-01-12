@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
@@ -104,14 +105,20 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
                 //读取微信API配置信息
                 SharedPreferences preference = context.getSharedPreferences("wechat_config", MODE_PRIVATE);
                 String corpId = preference.getString("wechat_corp_id", null);
+                String secret = preference.getString("wechat_secret", null);
                 String chatSecret = preference.getString("wechat_chat_secret", null);
 
+                Integer agentId = preference.getInt("wechat_notify_agent_id", 0);
                 String sender = preference.getString("wechat_notify_sender", null);
                 String receiver = preference.getString("wechat_notify_receiver", null);
 
-                //创建微信API客户端并发送消息
-                WeChatClient chatClient = new WeChatClient(corpId, "", chatSecret);
-                chatClient.sendSingleChatTextMessage(sender, receiver, text);
+                //创建微信API客户端并发送消息，在chatSecret非空时优先采用企业聊天信息发送
+                WeChatClient chatClient = new WeChatClient(corpId, secret, chatSecret);
+                if (TextUtils.isEmpty(chatSecret)) {
+                    chatClient.sendUserTextMessage("fengjianbo", text, agentId);
+                } else {
+                    chatClient.sendSingleChatTextMessage(sender, receiver, text);
+                }
             }
         };
 
