@@ -27,11 +27,18 @@ public class MainActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.chatSecretEditText);
         editText.setText(preference.getString("wechat_chat_secret", ""));
 
+        editText = (EditText) findViewById(R.id.secretEditText);
+        editText.setText(preference.getString("wechat_secret", ""));
+
         editText = (EditText) findViewById(R.id.senderEditText);
         editText.setText(preference.getString("wechat_notify_sender", ""));
 
         editText = (EditText) findViewById(R.id.receiverEditText);
         editText.setText(preference.getString("wechat_notify_receiver", ""));
+
+        editText = (EditText) findViewById(R.id.agentIdEditText);
+        Integer agentid = preference.getInt("wechat_notify_agent_id", 0);
+        editText.setText(agentid.toString());
     }
 
     //更新配置按钮回调函数
@@ -46,11 +53,17 @@ public class MainActivity extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.chatSecretEditText);
         editor.putString("wechat_chat_secret", editText.getText().toString());
 
+        editText = (EditText) findViewById(R.id.secretEditText);
+        editor.putString("wechat_secret", editText.getText().toString());
+
         editText = (EditText) findViewById(R.id.senderEditText);
         editor.putString("wechat_notify_sender", editText.getText().toString());
 
         editText = (EditText) findViewById(R.id.receiverEditText);
         editor.putString("wechat_notify_receiver", editText.getText().toString());
+
+        editText = (EditText) findViewById(R.id.agentIdEditText);
+        editor.putInt("wechat_notify_agent_id", Integer.parseInt(editText.getText().toString()));
 
         editor.apply();
     }

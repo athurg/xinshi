@@ -34,6 +34,20 @@
             android:id="@+id/corpIdEditText" />
 
         <TextView
+            android:text="微信Secret"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/secretTextView" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="xxxx"
+            android:ems="10"
+            android:id="@+id/secretEditText" />
+
+        <TextView
             android:text="微信ChatSecret"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -43,23 +57,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:text="Name"
+            android:text="xxxx"
             android:ems="10"
             android:id="@+id/chatSecretEditText" />
-
-        <TextView
-            android:text="微信发件人"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/senderTextView" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:text="Name"
-            android:ems="10"
-            android:id="@+id/senderEditText" />
 
         <TextView
             android:text="微信收件人"
@@ -71,9 +71,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:text="Name"
+            android:text="sender"
             android:ems="10"
             android:id="@+id/receiverEditText" />
+
+        <TextView
+            android:text="微信聊天发件人"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/senderTextView" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:text="receiver"
+            android:ems="10"
+            android:id="@+id/senderEditText" />
+
+        <TextView
+            android:text="微信AgentID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/agentIdTextView" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:text="0"
+            android:ems="10"
+            android:id="@+id/agentIdEditText" />
 
         <Button
             android:text="更新配置"
