@@ -7,4 +7,5 @@
     <string name="wechat_chat_agent_id">WeChat Secret</string>
     <string name="wechat_chat_receiver">WeChat Chat Receiver</string>
     <string name="update_preference">Update Preference</string>
+    <string name="update_preference_description">Save and enable new preference?</string>
 </resources>

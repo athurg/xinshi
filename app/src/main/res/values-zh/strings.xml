@@ -8,4 +8,5 @@
     <string name="wechat_chat_sender">微信企业会话发件人</string>
     <string name="wechat_secret">微信Secret</string>
     <string name="wechat_chat_secret">微信企业会话Secret</string>
+    <string name="update_preference_description">是否保存并启用新配置？</string>
 </resources>

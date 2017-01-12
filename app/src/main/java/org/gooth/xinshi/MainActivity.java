@@ -1,5 +1,7 @@
 package org.gooth.xinshi;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.v7.app.AppCompatActivity;
@@ -41,8 +43,7 @@ public class MainActivity extends AppCompatActivity {
         editText.setText(agentid.toString());
     }
 
-    //更新配置按钮回调函数
-    public void updatePreferences(View view) {
+    void savePreferece() {
         SharedPreferences preference = getSharedPreferences("wechat_config", MODE_PRIVATE);
         Editor editor = preference.edit();
 
@@ -66,5 +67,26 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("wechat_notify_agent_id", Integer.parseInt(editText.getText().toString()));
 
         editor.apply();
+    }
+
+    //更新配置按钮回调函数
+    public void updatePreferences(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.update_preference);
+        builder.setMessage(R.string.update_preference_description);
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                savePreferece();
+            }
+        });
+        builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                loadPreference();
+            }
+        });
+
+        builder.create().show();
     }
 }
