@@ -26,12 +26,12 @@ public class WeChatClient {
 
 
     //获取常规微信API所需的AccessToken
-    public String getAccessToken(){
+    public String getAccessToken() {
         return getToken(secret);
     }
 
     //获取企业聊天相关微信API所需的AccessToken
-    public String getChatAccessToken(){
+    public String getChatAccessToken() {
         return getToken(chatSecret);
     }
 
@@ -39,7 +39,7 @@ public class WeChatClient {
     public void sendSingleChatTextMessage(String sender, String receiver, String content) {
         //获取发送消息的AccessToken
         String accessToken = getChatAccessToken();
-        if (accessToken==null) {
+        if (accessToken == null) {
             Log.i("WECHAT", "获取AccessToken失败");
             return;
         }
@@ -61,6 +61,40 @@ public class WeChatClient {
 
             JSONObject result = request("POST", "/chat/send?access_token=" + accessToken, requestParam.toString());
             Log.d("WECHAT", "发送企业单聊消息响应：" + result.toString());
+        } catch (JSONException e) {
+            Log.e("WECHAT", "JSON参数处理错误");
+            e.printStackTrace();
+            return;
+        }
+    }
+
+    //Wrapper of sendTextMessage
+    public void sendUserTextMessage(String receiver, String content, Integer agentId) {
+        sendTextMessage("user", receiver, content, agentId);
+    }
+
+    //发送企业消息，receiverType可以是user、party、tag中的一个
+    private void sendTextMessage(String receiverType, String receiver, String content, Integer agentId) {
+        //获取发送消息的AccessToken
+        String accessToken = getAccessToken();
+        if (accessToken == null) {
+            Log.i("WECHAT", "获取AccessToken失败");
+            return;
+        }
+
+        try {
+            JSONObject textObj = new JSONObject();
+            textObj.put("content", content);
+
+            JSONObject requestParam = new JSONObject();
+            requestParam.put("to" + receiverType, receiver);
+            requestParam.put("agentid", agentId);
+            requestParam.put("msgtype", "text");
+            requestParam.put("safe", 0);
+            requestParam.put("text", textObj);
+
+            JSONObject result = request("POST", "/message/send?access_token=" + accessToken, requestParam.toString());
+            Log.d("WECHAT", "发送企业消息响应：" + result.toString());
         } catch (JSONException e) {
             Log.e("WECHAT", "JSON参数处理错误");
             e.printStackTrace();
