@@ -11,6 +11,11 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import org.gooth.wechatmp.QYChatTextMessage;
+import org.gooth.wechatmp.QYClient;
+import org.gooth.wechatmp.QYTextMessage;
+import org.json.JSONException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -26,20 +31,10 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class XinShiBroadcastReceiver extends BroadcastReceiver {
+    private String TAG="XinShiReceiver";
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-
-        //拨打电话事件
-        if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
-            String phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
-            if (phoneNumber == null || phoneNumber.equals("")) {
-                Log.e("XINSHI", "主叫号码为空");
-                return;
-            }
-            notify(context, "正拨打：" + phoneNumber);
-            return;
-        }
 
         //接听电话事件
         if (action.equals("android.intent.action.PHONE_STATE")) {
@@ -69,7 +64,9 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
             String format = (String) bundle.get("format");
 
             String notifyText = "";
+            String smsText = "";
             String prevAddress = "";
+            Date date = null;
             SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
 
             for (Object pdu : pdus) {
@@ -85,10 +82,11 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
                 //短信可能由多个部分组成，如果发件人一致则直接合并内容，否则视为新信息
                 String address = message.getOriginatingAddress();
                 if (!address.equals(prevAddress)) {
-                    Date date = new Date(message.getTimestampMillis());
+                    date = new Date(message.getTimestampMillis());
                     notifyText += "\n发件人：" + address + "\n时间：" + timeFormat.format(date) + "\n内容：\n";
                     prevAddress = address;
                 }
+                smsText += message.getMessageBody();
                 notifyText += message.getMessageBody();
             }
 
@@ -98,7 +96,7 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-    private void notify(final Context context, final String text) {
+    private void notify(final Context context, final String content) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -112,12 +110,18 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
                 String sender = preference.getString("wechat_notify_sender", null);
                 String receiver = preference.getString("wechat_notify_receiver", null);
 
-                //创建微信API客户端并发送消息，在chatSecret非空时优先采用企业聊天信息发送
-                WeChatClient chatClient = new WeChatClient(corpId, secret, chatSecret);
-                if (TextUtils.isEmpty(chatSecret)) {
-                    chatClient.sendUserTextMessage("fengjianbo", text, agentId);
-                } else {
-                    chatClient.sendSingleChatTextMessage(sender, receiver, text);
+                try {
+                    QYClient client = new QYClient(corpId, secret, chatSecret);
+                    if (TextUtils.isEmpty(chatSecret)) {
+                        QYChatTextMessage message = QYChatTextMessage.newSingleMessage(sender,receiver,content);
+                        client.sendMessage(message);
+                    } else {
+                        QYTextMessage message = new QYTextMessage(agentId, content);
+                        message.setToUser(receiver);
+                        client.sendMessage(message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
         };
