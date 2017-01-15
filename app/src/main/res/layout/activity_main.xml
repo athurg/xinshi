@@ -21,13 +21,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:scrollbarAlwaysDrawVerticalTrack="true">
 
             <TextView
-                android:text="@string/wechat_corp_id"
+                android:text="@string/wechat_qy_corp_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/corpIdTextView" />
+                android:id="@+id/qyCorpIdTextView" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -35,13 +36,13 @@
                 android:inputType="text"
                 android:text="corpid"
                 android:ems="10"
-                android:id="@+id/corpIdEditText" />
+                android:id="@+id/qyCorpIdEditText" />
 
             <TextView
-                android:text="@string/wechat_secret"
+                android:text="@string/wechat_qy_secret"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/secretTextView" />
+                android:id="@+id/qySecretTextView" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -49,13 +50,13 @@
                 android:inputType="text"
                 android:text="xxxx"
                 android:ems="10"
-                android:id="@+id/secretEditText" />
+                android:id="@+id/qySecretEditText" />
 
             <TextView
-                android:text="@string/wechat_chat_secret"
+                android:text="@string/wechat_qy_chat_secret"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/chatSecretTextView" />
+                android:id="@+id/qyChatSecretTextView" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -63,13 +64,13 @@
                 android:inputType="text"
                 android:text="xxxx"
                 android:ems="10"
-                android:id="@+id/chatSecretEditText" />
+                android:id="@+id/qyChatSecretEditText" />
 
             <TextView
-                android:text="@string/wechat_chat_receiver"
+                android:text="@string/wechat_qy_chat_receiver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/receiverTextView" />
+                android:id="@+id/qyChatReceiverTextView" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -77,13 +78,13 @@
                 android:inputType="text"
                 android:text="sender"
                 android:ems="10"
-                android:id="@+id/receiverEditText" />
+                android:id="@+id/qyChatReceiverEditText" />
 
             <TextView
-                android:text="@string/wechat_chat_sender"
+                android:text="@string/wechat_qy_chat_sender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/senderTextView" />
+                android:id="@+id/qyChatSenderTextView" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -91,13 +92,13 @@
                 android:inputType="text"
                 android:text="receiver"
                 android:ems="10"
-                android:id="@+id/senderEditText" />
+                android:id="@+id/qyChatSenderEditText" />
 
             <TextView
-                android:text="@string/wechat_chat_agent_id"
+                android:text="@string/wechat_qy_agent_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/agentIdTextView" />
+                android:id="@+id/qyAgentIdTextView" />
 
             <EditText
                 android:layout_width="match_parent"
@@ -105,7 +106,91 @@
                 android:inputType="numberDecimal"
                 android:text="0"
                 android:ems="10"
-                android:id="@+id/agentIdEditText" />
+                android:id="@+id/qyAgentIdEditText" />
+
+            <TextView
+                android:text="@string/wechat_qy_notify_receiver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/qyNotifyReceiverTextView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="xxxx"
+                android:ems="10"
+                android:id="@+id/qyNotifyReceiverEditText" />
+
+            <TextView
+                android:text="@string/wechat_mp_app_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mpAppIdTextView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="xxxx"
+                android:ems="10"
+                android:id="@+id/mpAppIdEditText" />
+
+            <TextView
+                android:text="@string/wechat_mp_app_secret"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mpAppSecretTextView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="xxxx"
+                android:ems="10"
+                android:id="@+id/mpAppSecretEditText" />
+
+            <TextView
+                android:text="@string/wechat_mp_receiver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mpReceiverTextView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="xxxx"
+                android:ems="10"
+                android:id="@+id/mpReceiverEditText" />
+
+            <TextView
+                android:text="@string/wechat_mp_sms_notify_template_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mpSmsNotifyTemplateIdTextView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="xxxx"
+                android:ems="10"
+                android:id="@+id/mpSmsNotifyTemplateIdEditText" />
+
+            <TextView
+                android:text="@string/wechat_mp_phone_notify_template_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/mpPhoneNotifyTemplateIdTextView" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="xxxx"
+                android:ems="10"
+                android:id="@+id/mpPhoneNotifyTemplateIdEditText" />
 
             <Button
                 android:text="@string/update_preference"

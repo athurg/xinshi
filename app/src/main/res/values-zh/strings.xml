@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">信使</string>
-    <string name="wechat_corp_id">微信CorpID</string>
+    <string name="wechat_qy_corp_id">企业号corpid</string>
     <string name="update_preference">更新配置</string>
-    <string name="wechat_chat_agent_id">微信应用AgentID</string>
-    <string name="wechat_chat_receiver">微信企业会话收件人</string>
-    <string name="wechat_chat_sender">微信企业会话发件人</string>
-    <string name="wechat_secret">微信Secret</string>
-    <string name="wechat_chat_secret">微信企业会话Secret</string>
+    <string name="wechat_qy_agent_id">企业号消息发送应用agentid</string>
+    <string name="wechat_qy_notify_receiver">企业号消息收件人</string>
+    <string name="wechat_qy_chat_receiver">企业号会话收件人</string>
+    <string name="wechat_qy_chat_sender">企业号会话发件人</string>
+    <string name="wechat_qy_secret">企业号appsecret</string>
+    <string name="wechat_qy_chat_secret">企业号ChatSecret</string>
     <string name="update_preference_description">是否保存并启用新配置？</string>
+    <string name="wechat_mp_app_id">公众号appid</string>
+    <string name="wechat_mp_app_secret">公众号appsecret</string>
+    <string name="wechat_mp_receiver">公众号消息接收人openid</string>
+    <string name="wechat_mp_sms_notify_template_id">公众号短信通知templateid</string>
+    <string name="wechat_mp_phone_notify_template_id">公众号电话通知template_id</string>
 </resources>

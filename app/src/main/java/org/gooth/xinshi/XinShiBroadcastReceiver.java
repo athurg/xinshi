@@ -8,16 +8,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Log;
 
+import org.gooth.wechatmp.MPClient;
 import org.gooth.wechatmp.QYChatTextMessage;
 import org.gooth.wechatmp.QYClient;
 import org.gooth.wechatmp.QYTextMessage;
+import org.gooth.wechatmp.TemplateMessage;
 import org.json.JSONException;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -31,9 +33,12 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class XinShiBroadcastReceiver extends BroadcastReceiver {
-    private String TAG="XinShiReceiver";
+    private String TAG = "XinShiReceiver";
+
     @Override
     public void onReceive(Context context, Intent intent) {
+        SharedPreferences preference = context.getSharedPreferences("wechat_config", MODE_PRIVATE);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
         String action = intent.getAction();
 
         //接听电话事件
@@ -45,7 +50,42 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
                 if (phoneNumber == null || phoneNumber.equals("")) {
                     return;
                 }
-                notify(context, "新来电：" + phoneNumber);
+
+                //企业号聊天通知
+                try {
+                    String sender = preference.getString("wechat_qy_chat_sender", null);
+                    String receiver = preference.getString("wechat_qy_chat_receiver", null);
+                    QYChatTextMessage message = QYChatTextMessage.newSingleMessage(sender, receiver, "新来电：" + phoneNumber);
+
+                    notifyByQYChatTextMessage(preference, message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                //企业号消息通知
+                try {
+                    Integer agentId = preference.getInt("wechat_qy_agent_id", 0);
+                    String receiver = preference.getString("wechat_qy_notify_receiver", null);
+                    QYTextMessage message = new QYTextMessage(agentId, "新来电：" + phoneNumber);
+                    message.setToUser(receiver);
+
+                    notifyByQYTextMessage(preference, message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                //公众号模板消息通知
+                try {
+                    String receiver = preference.getString("wechat_mp_receiver", null);
+                    String templateid = preference.getString("wechat_mp_phone_notify_template_id", null);
+
+                    TemplateMessage message = new TemplateMessage(templateid, receiver);
+                    message.addData("phone_number", phoneNumber);
+                    message.addData("time", timeFormat.format(new Date()));
+                    notifyByMPTemplateMessage(preference, message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
             return;
         }
@@ -67,7 +107,7 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
             String smsText = "";
             String prevAddress = "";
             Date date = null;
-            SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINESE);
+            HashMap<String, String> smss = new HashMap<String, String>();
 
             for (Object pdu : pdus) {
                 SmsMessage message = null;
@@ -92,34 +132,94 @@ public class XinShiBroadcastReceiver extends BroadcastReceiver {
 
             //去掉多余的换行符
             notifyText = notifyText.trim().replaceAll("\r\n", "\n");
-            notify(context, notifyText);
+
+            //企业号聊天通知
+            try {
+                String sender = preference.getString("wechat_qy_chat_sender", null);
+                String receiver = preference.getString("wechat_qy_chat_receiver", null);
+                QYChatTextMessage message = QYChatTextMessage.newSingleMessage(sender, receiver, notifyText);
+
+                notifyByQYChatTextMessage(preference, message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //企业号消息通知
+            try {
+                Integer agentId = preference.getInt("wechat_qy_agent_id", 0);
+                String receiver = preference.getString("wechat_qy_notify_receiver", null);
+                QYTextMessage message = new QYTextMessage(agentId, notifyText);
+                message.setToUser(receiver);
+
+                notifyByQYTextMessage(preference, message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //公众号模板消息通知
+            try {
+                String receiver = preference.getString("wechat_mp_receiver", null);
+                String templateid = preference.getString("wechat_mp_sms_notify_template_id", null);
+
+                TemplateMessage message = new TemplateMessage(templateid, receiver);
+                message.addData("sender", prevAddress);
+                message.addData("time", timeFormat.format(date));
+                message.addData("content", smsText);
+                notifyByMPTemplateMessage(preference, message);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void notify(final Context context, final String content) {
+    private void notifyByQYTextMessage(final SharedPreferences preference, final QYTextMessage message) {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                //读取微信API配置信息
-                SharedPreferences preference = context.getSharedPreferences("wechat_config", MODE_PRIVATE);
-                String corpId = preference.getString("wechat_corp_id", null);
-                String secret = preference.getString("wechat_secret", null);
-                String chatSecret = preference.getString("wechat_chat_secret", null);
-
-                Integer agentId = preference.getInt("wechat_notify_agent_id", 0);
-                String sender = preference.getString("wechat_notify_sender", null);
-                String receiver = preference.getString("wechat_notify_receiver", null);
+                String corpId = preference.getString("wechat_qy_corp_id", null);
+                String secret = preference.getString("wechat_qy_secret", null);
+                String chatSecret = preference.getString("wechat_qy_chat_secret", null);
 
                 try {
                     QYClient client = new QYClient(corpId, secret, chatSecret);
-                    if (TextUtils.isEmpty(chatSecret)) {
-                        QYChatTextMessage message = QYChatTextMessage.newSingleMessage(sender,receiver,content);
+                    client.sendMessage(message);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        new Thread(runnable).start();
+    }
+
+    private void notifyByQYChatTextMessage(final SharedPreferences preference, final QYChatTextMessage message) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                String corpId = preference.getString("wechat_qy_corp_id", null);
+                String chatSecret = preference.getString("wechat_qy_chat_secret", null);
+
+                try {
+                    QYClient client = new QYClient(corpId, "", chatSecret);
                         client.sendMessage(message);
-                    } else {
-                        QYTextMessage message = new QYTextMessage(agentId, content);
-                        message.setToUser(receiver);
-                        client.sendMessage(message);
-                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        new Thread(runnable).start();
+    }
+
+    private void notifyByMPTemplateMessage(final SharedPreferences preference, final TemplateMessage message) {
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                String appid = preference.getString("wechat_mp_app_id", null);
+                String secret = preference.getString("wechat_mp_app_secret", null);
+
+                try {
+                    new MPClient(appid, secret).sendMessage(message);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

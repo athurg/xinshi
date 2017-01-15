@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">XinShi</string>
-    <string name="wechat_corp_id">WeChat CoprID</string>
-    <string name="wechat_secret">WeChat Secret</string>
-    <string name="wechat_chat_secret">WeChat Chat Secret</string>
-    <string name="wechat_chat_sender">WeChat Chat Sender</string>
-    <string name="wechat_chat_agent_id">WeChat Secret</string>
-    <string name="wechat_chat_receiver">WeChat Chat Receiver</string>
+    <string name="wechat_qy_corp_id">WeChat QY corpid</string>
+    <string name="wechat_qy_secret">WeChat QY appsecret</string>
+    <string name="wechat_qy_chat_secret">WeChat QY Chat Secret</string>
+    <string name="wechat_qy_chat_sender">WeChat QY Chat Sender</string>
+    <string name="wechat_qy_chat_receiver">WeChat QY Chat Receiver</string>
+    <string name="wechat_qy_agent_id">WeChat QY agetid</string>
+    <string name="wechat_qy_notify_receiver">WeChat QY Notify receiver</string>
     <string name="update_preference">Update Preference</string>
     <string name="update_preference_description">Save and enable new preference?</string>
+    <string name="wechat_mp_app_id">WeChat MP appid</string>
+    <string name="wechat_mp_app_secret">WeChat MP appsecret</string>
+    <string name="wechat_mp_receiver">WeChat MP Receiver openid</string>
+    <string name="wechat_mp_sms_notify_template_id">WeChat MP SMS templateid</string>
+    <string name="wechat_mp_phone_notify_template_id">WeChat MP Phone Notify templateid</string>
 </resources>
